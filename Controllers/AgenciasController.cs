@@ -1,7 +1,10 @@
 ﻿using DriveNow.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace DriveNow.MVC.Controllers
 {
@@ -11,22 +14,30 @@ namespace DriveNow.MVC.Controllers
 
         public AgenciasController(IHttpClientFactory httpClientFactory)
         {
+            
             _apiClient = httpClientFactory.CreateClient("DriveNow.API");
         }
 
         public async Task<IActionResult> Index()
         {
-            var response = await _apiClient.GetAsync("Agencias");
+            try
+            {
+                var response = await _apiClient.GetAsync("Agencias");
 
-            if (!response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
+                    return View(new List<AgenciaView>());
+
+                var json = await response.Content.ReadAsStringAsync();
+
+                var agencias = JsonSerializer.Deserialize<List<AgenciaView>>(json,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                return View(agencias);
+            }
+            catch
+            {
                 return View(new List<AgenciaView>());
-
-            var json = await response.Content.ReadAsStringAsync();
-
-            var agencias = JsonSerializer.Deserialize<List<AgenciaView>>(json,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            return View(agencias ?? new List<AgenciaView>());
+            }
         }
 
         public IActionResult CriarAgencia()

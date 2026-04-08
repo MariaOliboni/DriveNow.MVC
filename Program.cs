@@ -25,12 +25,14 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
+// Comentado para teste: possivelmente intercepta rotas MVC
+// app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+    // .WithStaticAssets()
+    ;
+    
 
 app.Run();
