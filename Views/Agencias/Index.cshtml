@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DriveNow.MVC.Models.AgenciaView>
+
+<h1>Lista de Agências</h1>
+<a href="/Agencias/CriarAgencia" class="btn btn-primary mb-3">Adicionar Agência</a>
+ 
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nome Fantasia</th>
+            <th>Cep</th>
+            <th>Logradouro</th>
+            <th>Bairro</th>
+            <th>Localidade</th>
+            <th>Uf</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+ 
+                <td>@a.NomeFantasia</td>
+                <td>@a.Cep</td>
+                <td>@a.Logradouro</td>
+                <td>@a.Bairro</td>
+                <td>@a.Localidade</td>
+                <td>@a.Uf</td>
+                <td>
+                    <a href="/Agencias/EditarAgencias/@a.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="/Agencias/DeletarAgencias/@a.Id" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
