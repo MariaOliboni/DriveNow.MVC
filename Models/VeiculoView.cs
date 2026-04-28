@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DriveNow.MVC.Models
 {
@@ -21,5 +22,12 @@ namespace DriveNow.MVC.Models
         public string? Agencia { get; set; }
 
         public string NomeAgencia { get; set; }
+
+        public string? FotoUrl { get; set; }
+        [NotMapped]
+        public IFormFile FotoUpload
+        {
+            get; set;
+        }
     }
 }
